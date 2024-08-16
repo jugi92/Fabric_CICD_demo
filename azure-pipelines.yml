@@ -1,7 +1,4 @@
-# Python package
-# Create and test a Python package on multiple Python versions.
-# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+# CICD Pipeline for running Microsoft Fabric specific python scripts
 
 # specific branch build with batching: https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&tabs=yaml#ci-triggers
 trigger:
@@ -12,7 +9,7 @@ trigger:
     # could be something like this to trigger only on shortcut branches
     # - '*-shortcut'
 
-pool: 'jugis_laptop'
+pool: 'jugis_laptop'  # windows OS asumed, for Linux the scripts below need to be slightly modified
 
 parameters:
 - name: python.version # Required as first property.
@@ -30,10 +27,7 @@ parameters:
 
 
 steps:
-# - task: UsePythonVersion@0
-#   inputs:
-#     versionSpec: '$(python.version)'
-#   displayName: 'Use Python $(python.version)'
+
 
 - script: |
     call python -m venv .venv
@@ -41,15 +35,9 @@ steps:
     call pip install -r requirements.txt
   displayName: 'Install dependencies'
 
-# - script: |
-#     echo start 
-#     .venv\Scripts\activate.bat
-#     python deploy.py
-#     echo done
-#   displayName: 'run python script'
 
 - task: PythonScript@0
   inputs:
     scriptSource: 'filePath'
     scriptPath: 'deploy.py'
-    pythonInterpreter: '.venv/Scripts/python.exe'
+    pythonInterpreter: '.venv\Scripts\python.exe'
