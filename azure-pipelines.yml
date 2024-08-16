@@ -8,7 +8,9 @@ trigger:
   batch: true
   branches:
     include:
-    - '*-copy'
+    - '*'
+    # could be something like this to trigger only on shortcut branches
+    # - '*-shortcut'
 
 pool: 'jugis_laptop'
 
