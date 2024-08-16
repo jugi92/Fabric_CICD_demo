@@ -28,7 +28,6 @@ parameters:
 
 steps:
 
-
 - script: |
     call python -m venv .venv
     call .venv\Scripts\activate.bat
@@ -36,8 +35,7 @@ steps:
   displayName: 'Install dependencies'
 
 
-- task: PythonScript@0
-  inputs:
-    scriptSource: 'filePath'
-    scriptPath: 'deploy.py'
-    pythonInterpreter: '.venv\Scripts\python.exe'
+- script: |
+    call .venv\Scripts\activate.bat
+    call python deploy.py
+  displayName: 'Run python deployment script'
