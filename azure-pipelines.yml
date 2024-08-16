@@ -1,0 +1,49 @@
+# Python package
+# Create and test a Python package on multiple Python versions.
+# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+
+# specific branch build with batching: https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&tabs=yaml#ci-triggers
+trigger:
+  batch: true
+  branches:
+    include:
+    - '*-copy'
+
+pool: 'jugis_laptop'
+
+parameters:
+- name: python.version # Required as first property.
+  displayName: python.version # Human-readable name for the parameter.
+  type: string
+  default: '3.10'
+- name: MSFABRIC_USERNAME
+  displayName: MSFABRIC_USERNAME
+  type: string
+  default: tech_user@MngEnvMCAP312279.onmicrosoft.com
+- name: MSFABRIC_PASSWORD
+  displayName: MSFABRIC_PASSWORD
+  type: string
+  default: $(MSFABRIC_PASSWORD)
+
+
+steps:
+# - task: UsePythonVersion@0
+#   inputs:
+#     versionSpec: '$(python.version)'
+#   displayName: 'Use Python $(python.version)'
+
+- script: |
+    echo hello
+    python -m venv .venv
+    .venv\Scripts\activate.bat
+    pip install msfabricpysdkcore
+    echo done
+  displayName: 'Install dependencies'
+
+- script: |
+    echo start 
+    .venv\Scripts\activate.bat
+    python deploy.py
+    echo done
+  displayName: 'run python script'
