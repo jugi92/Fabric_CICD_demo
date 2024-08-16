@@ -14,3 +14,12 @@ We know this is not yet inline with Microsofts approach to security:
 https://news.microsoft.com/features/whats-solution-growing-problem-passwords-says-microsoft/
 But it is a solution that can be discussed with your central cloud governance team.
 It relies on proper use of conditional access which is the way forward in a ZeroTrust World anyways.
+
+# Local Testing
+
+1. Create an AD User as described above and secure it
+1. Create a workspace called Fabric_CICD_demo, connect it to your repo and branch out to a workspace called Fabric_CICD_demo_feature1 on a branch named the same.
+1. Create and activate venv (internet will give you platform specific commands)
+1. Copy .exampleenv to .env and put the values
+1. `pip install -r requirements.txt`
+1. `python deploy.py`
