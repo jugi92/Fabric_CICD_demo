@@ -36,16 +36,18 @@ steps:
 #   displayName: 'Use Python $(python.version)'
 
 - script: |
-    echo hello
-    python -m venv .venv
-    .venv\Scripts\activate.bat
-    pip install msfabricpysdkcore
-    echo done
+    echo hello; python -m venv .venv; .venv\Scripts\activate.bat; pip install -r requirements.txt; echo done
   displayName: 'Install dependencies'
 
-- script: |
-    echo start 
-    .venv\Scripts\activate.bat
-    python deploy.py
-    echo done
-  displayName: 'run python script'
+# - script: |
+#     echo start 
+#     .venv\Scripts\activate.bat
+#     python deploy.py
+#     echo done
+#   displayName: 'run python script'
+
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'filePath'
+    scriptPath: 'deploy.py'
+    pythonInterpreter: '.venv/Scripts/python.exe'
