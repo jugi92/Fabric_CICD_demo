@@ -1,20 +1,16 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+The target of this repo is to interact with the Fabric Rest API in Azure DevOps Pipelines to build automation and CICD, e.g. creating shortcuts to original workspace lakehouse after branching into new workspace. 
+Because currently [Service Principal Auth](https://learn.microsoft.com/en-us/rest/api/fabric/core/onelake-shortcuts/create-shortcut?tabs=HTTP) is not supported in a lot of APIs we use the following workaround (which will need to be discussed with your security team):
+  1. Create a regular Entra ID User
+  1. Exclude the user from two factor auth policies of your tenant
+  1. Include the user into a location based conditional access policy that allows the user to login with user and password only from a specifc IP range (in this case the self hosted devops agent pool)
+  1. Give the user the right for the workspaces to manage, e.g. member
+  1. Build a devops yaml pipeline:
+     1. use [azure-cli](https://pypi.org/project/azure-cli/) in python to run `az login` for user and password auth
+     1. use [msfabriccoresdk](https://pypi.org/project/msfabricpysdkcore/) for interaction with the APIs in python
+        1. create shortcut / do your CICD stuff
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
-
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
-
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+We know this is not yet inline with Microsofts approach to security:
+https://news.microsoft.com/features/whats-solution-growing-problem-passwords-says-microsoft/
+But it is a solution that can be discussed with your central cloud governance team.
+It relies on proper use of conditional access which is the way forward in a ZeroTrust World anyways.
