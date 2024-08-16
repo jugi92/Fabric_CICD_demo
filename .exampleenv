@@ -1,0 +1,5 @@
+# this .env file is an example of what you should have in your project
+# for the pipelines this is not required as those should have the variables set in the pipeline itself
+# but for local development you should have this .env file in your project root
+FABRIC_PASSWORD=
+FABRIC_USERNAME=technical-user@yourcompany.org
