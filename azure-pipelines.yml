@@ -19,14 +19,14 @@ parameters:
   displayName: python.version # Human-readable name for the parameter.
   type: string
   default: '3.10'
-- name: MSFABRIC_USERNAME
-  displayName: MSFABRIC_USERNAME
+- name: FABRIC_USERNAME
+  displayName: FABRIC_USERNAME
   type: string
   default: tech_user@MngEnvMCAP312279.onmicrosoft.com
-- name: MSFABRIC_PASSWORD
-  displayName: MSFABRIC_PASSWORD
+- name: FABRIC_PASSWORD
+  displayName: FABRIC_PASSWORD
   type: string
-  default: $(MSFABRIC_PASSWORD)
+  default: $(FABRIC_PASSWORD)
 
 
 steps:
