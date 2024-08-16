@@ -36,7 +36,7 @@ steps:
 #   displayName: 'Use Python $(python.version)'
 
 - script: |
-    echo hello; python -m venv .venv; .venv\Scripts\activate.bat; pip install -r requirements.txt; echo done
+    python -m venv .venv; .venv\Scripts\activate.bat; pip install -r requirements.txt
   displayName: 'Install dependencies'
 
 # - script: |
