@@ -24,13 +24,12 @@ wss = fc.list_workspaces()
 
 target_ws_name = "Fabric_CICD_demo"
 target_ws = fc.get_workspace_by_name(target_ws_name)
-target_lh_item = target_ws.list_lakehouses()[0]  # assume there is only one lakehouse
-target_lh = target_ws.get_lakehouse(target_lh_item.id)  # necessary because list_lakehouses() returns only the item
+target_lh = target_ws.list_lakehouses(with_properties=True)[0]  # assume there is only one lakehouse
 
 for source_ws in wss:
     # if name start with Fabric_CICD_demo_
     if source_ws.display_name.startswith(target_ws_name + "_"):
-        source_lh = source_ws.list_lakehouses()[0]  # assume there is only one lakehouse
+        source_lh = source_ws.list_lakehouses(with_properties=True)[0]  # assume there is only one lakehouse
         for table in target_lh.list_tables(): # TODO for Fabric Product Group: fix for Lakehouses with schema enabled
             try:
                 source_lh.create_shortcut(
